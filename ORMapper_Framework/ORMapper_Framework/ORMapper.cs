@@ -15,19 +15,24 @@ namespace ORMapper_Framework
         public static bool RegisterNewEntity<T>() where T : AEntity
         {
             Type t = typeof(T);
-
-            if(!_Entities.ContainsKey(t))
+            bool result = true;
+            List<__Entity> entities = new List<__Entity>() { new __Entity(t) };
+            entities = entities.DecodeEntities();
+            foreach (__Entity e in entities)
             {
-                _Entities.Add(t, new __Entity(t));
-                return true;
+                if (!_Entities.ContainsKey(e.Member))
+                {
+                    _Entities.Add(e.Member, e);
+                }
+                else
+                    result = false;
             }
-
-            return false;
+            return result;
         }
 
         public static void EnsureCreated()
         {
-            _Entities.Values.ToList().DecodeEntities();
+            _Entities.Values.ToList().ForEach(e => Console.WriteLine(e.TableName+" "+e.IsDerived));
         }
     }
 }

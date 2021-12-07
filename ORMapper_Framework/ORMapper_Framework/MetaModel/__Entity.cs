@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ORMapper_Framework.MetaModel
 {
-    public class __Entity
+    internal class __Entity
     {
         public __Entity(Type t)
         {

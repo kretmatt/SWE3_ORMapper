@@ -20,7 +20,7 @@ namespace ORMapper_Framework.DBHelperClasses
 
         public static List<__Entity> DecodeEntity(this __Entity entity)
         {
-            List<__Entity> entities = new List<__Entity>() { entity };
+            List<__Entity> entities = new List<__Entity>();
             
             if (entity.IsDerived)
             {
@@ -31,7 +31,7 @@ namespace ORMapper_Framework.DBHelperClasses
 
             for(int i = 0; i < entity.Fields.Length; i++)
             {
-                if(entity.Fields[i].ColumnType.IsClass)
+                if(entity.Fields[i].ColumnType.IsClass && !entities.Any(e=>e.Member == entity.Fields[i].ColumnType))
                 {
                     if(typeof(AEntity).IsAssignableFrom(entity.Fields[i].ColumnType))
                         entities.AddRange(new __Entity(entity.Fields[i].ColumnType).DecodeEntity());
@@ -44,6 +44,8 @@ namespace ORMapper_Framework.DBHelperClasses
                     }
                 }      
             }
+
+            entities.Add(entity);
 
             return entities;
         }
