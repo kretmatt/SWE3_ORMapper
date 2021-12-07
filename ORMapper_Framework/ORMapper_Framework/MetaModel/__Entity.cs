@@ -1,5 +1,6 @@
 ﻿using ORMapper_Framework.Attributes;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ORMapper_Framework.MetaModel
 {
-    internal class __Entity
+    public class __Entity
     {
         public __Entity(Type t)
         {
@@ -16,13 +17,23 @@ namespace ORMapper_Framework.MetaModel
             
             if ((eAttr == null) || (string.IsNullOrWhiteSpace(eAttr.TableName)))
             {
-                TableName = t.Name.ToUpper();
+                if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(List<>))
+                {
+                    TableName = t.GetGenericArguments()[0].Name.ToUpper();
+                    t = t.GetGenericArguments()[0];
+                }
+                    
+                else
+                    TableName = t.Name.ToUpper();
             }
             else
                 TableName = eAttr.TableName;
 
             Member = t;
             List<__Field> fields = new List<__Field>();
+
+            if (t.BaseType.FullName != typeof(object).FullName && t.BaseType.IsClass && t.IsClass && t.BaseType.FullName != typeof(AEntity).FullName)
+                IsDerived = true;
 
             foreach(PropertyInfo i in t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
@@ -40,7 +51,7 @@ namespace ORMapper_Framework.MetaModel
                 if(cattr != null)
                 {
                     f.ColumnName = cattr.ColumnName ?? i.Name;
-                    f.ColumnType = cattr.ColumnType ?? i.PropertyType;
+                    f.ColumnType = cattr.ColumnType ?? i.PropertyType; 
                     f.IsNullable = cattr.Nullable;
 
                     if(cattr is PKAttribute)
@@ -50,6 +61,7 @@ namespace ORMapper_Framework.MetaModel
                     }
                     if(cattr is FKAttribute)
                     {
+                        f.IsExternal = typeof(IEnumerable).IsAssignableFrom(i.PropertyType);
                         f.IsForeignKey = true;
                         f.AssignmentTable = ((FKAttribute)cattr).AssignmentTable;
                         f.RemoteColumnName = ((FKAttribute)cattr).RemoteColumnName;
@@ -80,5 +92,7 @@ namespace ORMapper_Framework.MetaModel
         public __Field[] Externals { get; private set; }
         public __Field[] Internals { get; private set; }
         public __Field PrimaryKey { get; private set; }
+        public bool IsDerived { get; internal set; } = false;
+
     }
 }

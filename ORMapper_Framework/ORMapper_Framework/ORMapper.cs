@@ -1,20 +1,18 @@
-﻿using ORMapper_Framework.MetaModel;
+﻿using ORMapper_Framework.DBHelperClasses;
+using ORMapper_Framework.MetaModel;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ORMapper_Framework
 {
     public static class ORMapper
     {
         private static Dictionary<Type, __Entity> _Entities = new Dictionary<Type, __Entity>();
-
         public static IDbConnection Database { get; set; }
 
-        public static bool RegisterNewEntity<T>() where T : class
+        public static bool RegisterNewEntity<T>() where T : AEntity
         {
             Type t = typeof(T);
 
@@ -29,9 +27,7 @@ namespace ORMapper_Framework
 
         public static void EnsureCreated()
         {
-
+            _Entities.Values.ToList().DecodeEntities();
         }
-
-
     }
 }
