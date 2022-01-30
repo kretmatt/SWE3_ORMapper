@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace ORMapper_Framework.Attributes
 {
     /// <summary>
-    /// Marks property as primary key field
+    /// Marks member as primary key of the entity.
     /// </summary>
-    public class PKAttribute:ColumnAttribute
+    public class PkAttribute:ColumnAttribute
     {
     }
 }

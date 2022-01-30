@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace ORMapper_Framework.Attributes
 {
     /// <summary>
-    /// Marks a class as a database entity. Can only be defined for classes.
+    /// Explicitly marks a class as an entity and database table. Specifically designed for classes.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public class EntityAttribute:Attribute
     {
         /// <summary>

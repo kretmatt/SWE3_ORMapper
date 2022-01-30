@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace ORMapper_Framework.Attributes
 {
     /// <summary>
-    /// Marks property as unique in database
+    /// Marks property as unique in database. Important for table creation process.
     /// </summary>
-    public class UniqueAttribute:Attribute
+    public class UniqueAttribute : Attribute
     {
     }
 }

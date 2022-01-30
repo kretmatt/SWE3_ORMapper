@@ -1,6 +1,10 @@
 ﻿using ORMapper_Framework;
-using ORMapperDemo.School;
 using System;
+using Npgsql;
+using ORMapper_Framework.Queries;
+using System.Collections.Generic;
+using ORMapper_Framework.Enums;
+using ORMapperDemo.Library;
 
 namespace ORMapperDemo
 {
@@ -8,11 +12,21 @@ namespace ORMapperDemo
     {
         static void Main(string[] args)
         {
-            ORMapper.RegisterNewEntity<Course>();
-            ORMapper.EnsureCreated();
+            // INSERT DATABASE CONNECTION STRING HERE
+            // For example: Server=localhost;Port=5432;Database=swe3;User Id=user;Password=example;
+            OrMapper.Database = new NpgsqlConnection("");
+            
+            OrMapper.Database.Open();
+            Showcase.CreateTables();
+            Showcase.InsertData();
+            Showcase.RollbackExample();
+            Showcase.UpdateData();
+            Showcase.DeleteData();
+            Showcase.OneToMany();
+            Showcase.ManyToMany();
+            Showcase.Queries();
 
-
-            Console.WriteLine("Hello World!");
+            OrMapper.Database.Close();
         }
     }
 }

@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DBHelperClasses\" />
+    <PackageReference Include="Npgsql" Version="6.0.2" />
   </ItemGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>$(AssemblyName).Tests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
 
 </Project>
