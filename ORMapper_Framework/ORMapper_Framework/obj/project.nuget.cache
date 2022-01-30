@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "m/bUYDrpOQPv42ql27yUHZdVREr6RHdfbXub5hTdzGNHDbq0dND+EmAhHam1vxtpUPGBAwSkjSEjNR4VoEmdJw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Matthias\\Desktop\\SWE3\\SWE3_ORMapper\\ORMapper_Framework\\ORMapper_Framework\\ORMapper_Framework.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Matthias\\.nuget\\packages\\npgsql\\6.0.2\\npgsql.6.0.2.nupkg.sha512",
+    "C:\\Users\\Matthias\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
